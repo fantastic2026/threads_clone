@@ -16,12 +16,19 @@ class CreatePostCubit extends Cubit<CreatePostState> {
   }
 
   Future<void> pickFromGallery() async {
+    print('method called');
     final file = await _picker.pickImage(
       source: ImageSource.gallery,
       imageQuality: 80,
     );
 
+    print('object');
+    print(file);
+
     if (file == null) return;
+
+    print('got galley');
+    print(file.path);
 
     emit(state.copyWith(imageUrl: file.path));
   }
