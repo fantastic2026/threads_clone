@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:threads_clone/domain/entities/post.dart';
+import 'package:threads_clone/presentation/screens/comments_screen.dart';
 import 'package:threads_clone/presentation/widgets/like_button.dart';
 
 class PostCard extends StatelessWidget {
@@ -31,7 +32,10 @@ class PostCard extends StatelessWidget {
                   children: [
                     LikeButton(post: post),
                     const SizedBox(width: 20),
-                    Icon(Icons.mode_comment_outlined, size: 20),
+                    GestureDetector(
+                      onTap: () => CommentsScreen.show(context, post),
+                      child: Icon(Icons.mode_comment_outlined, size: 20),
+                    ),
                     const SizedBox(width: 20),
                     Icon(Icons.repeat, size: 20),
                   ],
@@ -44,5 +48,3 @@ class PostCard extends StatelessWidget {
     );
   }
 }
-
-
