@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:supabase/supabase.dart';
 import 'package:threads_clone/data/models/post_model.dart';
 
@@ -17,6 +19,27 @@ class RemotePostDataSource {
         .toList();
 
     return list;
+  }
+
+  Future<String> uploadImage(String localPath) async {
+    final file = File(localPath);
+
+    final fileName = '${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+    await _client.storage
+        .from('posts')
+        .upload(
+          fileName,
+          file,
+          fileOptions: const FileOptions(
+            contentType: 'image/jpeg',
+            upsert: true,
+          ),
+        );
+
+    final publicUrl = _client.storage.from('posts').getPublicUrl(fileName);
+
+    return publicUrl;
   }
 
   Future<void> createPost(PostModel post) async {
